@@ -4,7 +4,7 @@ import espen
 if __name__ == "__main__":
     options = edvard.parse_arguments()
     database = espen.get_database(options)
-    if options.type == "report":
+    if options.report:
         edvard.make_report(options, database)
     else:
         espen.note_time(options, database)

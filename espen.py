@@ -2,6 +2,8 @@ import time, pickle
 
 def get_database(options):
     # Load database from pickled object
+    with open("timekeep.p", "wb") as f:
+        pickle.dump({123: ["checkin"]}, f)
     database = pickle.load(open("timekeep.p", "rb"))
     return database
 

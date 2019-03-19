@@ -1,24 +1,26 @@
 import time, pickle
+from collections import OrderedDict
 
 def get_database(options):
     # Load database from pickled object
-    #with open("timekeep.p", "wb") as f:
-    #    pickle.dump({123: ["checkin"]}, f)
     database = pickle.load(open("timekeep.p", "rb"))
     return database
 
 def note_time(options, database):
-    # Set time and create dict entry
+    # Funny logic to check if your are screwing up
+    if database[next(reversed(database))][0] == 'checkin' and options.checkin:
+        exit("You are already checked in!")
+    if database[next(reversed(database))][0] == 'checkout' and not options.checkin:
+        exit("You have already checked out!")
+
     now = time.time()
-    data = {now: []}
+    database[now] = []
 
     # Check if checkin or check out, append as first element to list
     if options.checkin:
-        data[now].append('checkin')
+        database[now].append('checkin')
     else:
-        data[now].append('checkout')
+        database[now].append('checkout')
     
     # Write to database
-    merged = {**database, **data}
-    print (merged)
-    pickle.dump(merged, open("timekeep.p", "wb"))
+    pickle.dump(database, open("timekeep.p", "wb"))

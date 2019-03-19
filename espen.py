@@ -16,4 +16,6 @@ def note_time(options, database):
     else:
         data[now].append('checkout')
     
-    return data
+    # Write to database
+    merged = {**database, **data}
+    pickle.dump(merged, open("timekeep.p", "rb"))

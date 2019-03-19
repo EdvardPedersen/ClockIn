@@ -10,6 +10,9 @@ def parse_arguments():
     
 
 def get_hms(seconds):
+    '''
+    Given a number of seconds, return the hours, minutes and seconds
+    '''
     h, remainder = divmod(seconds, 60*60)
     m, s = divmod(remainder, 60)
     return h, m, s
@@ -18,14 +21,15 @@ def get_hms(seconds):
 def make_report(options, database):
     timestamps = database.keys()
     fixed_time = [time.localtime(x) for x in timestamps]
-    current_time = time.localtime()
 
+    # Put the checkin and checkout times in a day-based dictionary
     days = {}
     for cur_time in fixed_time:
         if not cur_time.tm_yday in days:
             days[cur_time.tm_yday] = []
         days[cur_time.tm_yday].append(time.mktime(cur_time))
 
+    # Make a report for each day
     for day in sorted(days.keys()):
         sorted_times = sorted(days[day])
         diff = 0

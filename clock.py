@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 '''
-Application for measuring time spend at work, and time spent
+Application for measuring time spent at work, and time spent
 in front of the computer.
 
 Designed to be activated on unlocking the screen, and deactivated
